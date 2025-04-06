@@ -42,3 +42,50 @@ class FileManagementApp:
             
         self.login_frame = tk.Frame(self.root, bg="#f0f0f0")
         self.login_frame.pack(fill=tk.BOTH, expand=True, padx=50, pady=50)
+
+title_label = tk.Label(self.login_frame, text="SecureFileX", font=("Helvetica", 24, "bold"), bg="#f0f0f0", fg="#333333")
+        title_label.pack(pady=20)
+        
+        subtitle_label = tk.Label(self.login_frame, text="Secure File Management System", font=("Helvetica", 14), bg="#f0f0f0", fg="#555555")
+        subtitle_label.pack(pady=10)
+        
+
+        form_frame = tk.Frame(self.login_frame, bg="#f0f0f0")
+        form_frame.pack(pady=20)
+        
+        tk.Label(form_frame, text="Username:", font=("Helvetica", 12), bg="#f0f0f0").grid(row=0, column=0, sticky="w", pady=10)
+        self.username_entry = tk.Entry(form_frame, font=("Helvetica", 12), width=30)
+        self.username_entry.grid(row=0, column=1, pady=10, padx=10)
+        
+        tk.Label(form_frame, text="Password:", font=("Helvetica", 12), bg="#f0f0f0").grid(row=1, column=0, sticky="w", pady=10)
+        self.password_entry = tk.Entry(form_frame, font=("Helvetica", 12), width=30, show="*")
+        self.password_entry.grid(row=1, column=1, pady=10, padx=10)
+        
+        button_frame = tk.Frame(self.login_frame, bg="#f0f0f0")
+        button_frame.pack(pady=20)
+        
+        login_button = tk.Button(button_frame, text="Login", command=self.login, font=("Helvetica", 12), 
+                                bg="#4CAF50", fg="white", width=10)
+        login_button.grid(row=0, column=0, padx=10)
+        
+        register_button = tk.Button(button_frame, text="Register", command=self.show_register_page, font=("Helvetica", 12),
+                                   bg="#2196F3", fg="white", width=10)
+        register_button.grid(row=0, column=1, padx=10)
+        
+        # Footer
+        footer_frame = tk.Frame(self.login_frame, bg="#f0f0f0")
+        footer_frame.pack(side=tk.BOTTOM, fill=tk.X, pady=20)
+        
+        footer_text = tk.Label(footer_frame, text="B.Tech CSE Project - Operating Systems", 
+                              font=("Helvetica", 10), bg="#f0f0f0", fg="#777777")
+        footer_text.pack()
+    
+    def show_register_page(self):
+        for widget in self.root.winfo_children():
+            widget.destroy()
+            
+        self.register_frame = tk.Frame(self.root, bg="#f0f0f0")
+        self.register_frame.pack(fill=tk.BOTH, expand=True, padx=50, pady=50)
+   -     
+        title_label = tk.Label(self.register_frame, text="Create Account", font=("Helvetica", 24, "bold"), bg="#f0f0f0", fg="#333333")
+        title_label.pack(pady=20)
