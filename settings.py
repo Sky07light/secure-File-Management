@@ -24,5 +24,18 @@ def load_settings(username):
             "show_thumbnails": True,
             "dark_mode": False
         }
+    try:
+        with open(settings_file, 'r') as f:
+            return json.load(f)
+    except Exception as e:
+        print(f"Error loading settings: {str(e)}")
+        # Return defaults if error
+        return {
+            "auto_encrypt": True,
+            "two_factor": False,
+            "show_thumbnails": True,
+            "dark_mode": False
+        }
+        
         
     
