@@ -89,3 +89,39 @@ title_label = tk.Label(self.login_frame, text="SecureFileX", font=("Helvetica", 
    -     
         title_label = tk.Label(self.register_frame, text="Create Account", font=("Helvetica", 24, "bold"), bg="#f0f0f0", fg="#333333")
         title_label.pack(pady=20)
+
+ # this is the registration form
+        form_frame = tk.Frame(self.register_frame, bg="#f0f0f0")
+        form_frame.pack(pady=20)
+        
+        tk.Label(form_frame, text="Full Name:", font=("Helvetica", 12), bg="#f0f0f0").grid(row=0, column=0, sticky="w", pady=10)
+        self.fullname_entry = tk.Entry(form_frame, font=("Helvetica", 12), width=30)
+        self.fullname_entry.grid(row=0, column=1, pady=10, padx=10)
+        
+        tk.Label(form_frame, text="Username:", font=("Helvetica", 12), bg="#f0f0f0").grid(row=1, column=0, sticky="w", pady=10)
+        self.reg_username_entry = tk.Entry(form_frame, font=("Helvetica", 12), width=30)
+        self.reg_username_entry.grid(row=1, column=1, pady=10, padx=10)
+        
+        tk.Label(form_frame, text="Email:", font=("Helvetica", 12), bg="#f0f0f0").grid(row=2, column=0, sticky="w", pady=10)
+        self.email_entry = tk.Entry(form_frame, font=("Helvetica", 12), width=30)
+        self.email_entry.grid(row=2, column=1, pady=10, padx=10)
+        
+        tk.Label(form_frame, text="Password:", font=("Helvetica", 12), bg="#f0f0f0").grid(row=3, column=0, sticky="w", pady=10)
+        self.reg_password_entry = tk.Entry(form_frame, font=("Helvetica", 12), width=30, show="*")
+        self.reg_password_entry.grid(row=3, column=1, pady=10, padx=10)
+        
+        tk.Label(form_frame, text="Confirm Password:", font=("Helvetica", 12), bg="#f0f0f0").grid(row=4, column=0, sticky="w", pady=10)
+        self.confirm_password_entry = tk.Entry(form_frame, font=("Helvetica", 12), width=30, show="*")
+        self.confirm_password_entry.grid(row=4, column=1, pady=10, padx=10)
+        
+        # Buttons
+        button_frame = tk.Frame(self.register_frame, bg="#f0f0f0")
+        button_frame.pack(pady=20)
+        
+        register_button = tk.Button(button_frame, text="Register", command=self.register, font=("Helvetica", 12), 
+                                   bg="#4CAF50", fg="white", width=10)
+        register_button.grid(row=0, column=0, padx=10)
+        
+        back_button = tk.Button(button_frame, text="Back to Login", command=self.show_login_page, font=("Helvetica", 12),
+                               bg="#607D8B", fg="white", width=12)
+        back_button.grid(row=0, column=1, padx=10)
