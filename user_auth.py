@@ -26,3 +26,19 @@ def register_user(username, password, fullname, email):
     
     # Hash password before storing
     hashed_password = hash_password(password)
+    # Create user data
+    user_data = {
+        "username": username,
+        "password": hashed_password,
+        "fullname": fullname,
+        "email": email,
+        "created_at": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "last_login": "",
+        "shared_with_me": []
+    }
+    
+    # Save user data
+    with open(user_file, 'w') as f:
+        json.dump(user_data, f, indent=4)
+    
+    return True
