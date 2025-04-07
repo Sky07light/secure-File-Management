@@ -34,3 +34,19 @@ def log_activity(username, activity, details=""):
     
     return True
 
+def view_activity_logs(username):
+    """Get activity logs for a user"""
+    log_file = os.path.join("logs", f"{username}_activity.log")
+    
+    if not os.path.exists(log_file):
+        return []
+    
+    try:
+        with open(log_file, 'r') as f:
+            logs = json.load(f)
+            # Return most recent logs first
+            return sorted(logs, key=lambda x: x["timestamp"], reverse=True)
+    except Exception as e:
+        print(f"Error reading log file: {str(e)}")
+        return []
+
