@@ -17,3 +17,20 @@ def log_activity(username, activity, details=""):
         "details": details,
         "ip_address": "127.0.0.1"  # For demo purposes
     }
+    logs = []
+    if os.path.exists(user_log_file):
+        try:
+            with open(user_log_file, 'r') as f:
+                logs = json.load(f)
+        except:
+            logs = []
+    
+    # Add new log
+    logs.append(log_entry)
+    
+    # Save logs
+    with open(user_log_file, 'w') as f:
+        json.dump(logs, f, indent=4)
+    
+    return True
+
