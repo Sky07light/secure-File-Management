@@ -21,3 +21,27 @@ def get_encryption_key(password=None):
     
     key = base64.urlsafe_b64encode(kdf.derive(password))
     return key
+
+def encrypt_file(file_path, password=None):
+    """Encrypt a file in-place"""
+    try:
+        # Generate key
+        key = get_encryption_key(password)
+        fernet = Fernet(key)
+        
+        # Read file
+        with open(file_path, 'rb') as file:
+            file_data = file.read()
+        
+        # Encrypt data
+        encrypted_data = fernet.encrypt(file_data)
+        
+        # Write encrypted data back to file
+        with open(file_path, 'wb') as file:
+            file.write(encrypted_data)
+            
+        return True
+    except Exception as e:
+        print(f"Encryption error: {str(e)}")
+        return False
+        
