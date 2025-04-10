@@ -166,3 +166,78 @@ def login(self):
             self.show_login_page()
         else:
             messagebox.showerror("Error", "Username already exists")
+
+def show_dashboard(self):
+        # Clear window
+        for widget in self.root.winfo_children():
+            widget.destroy()
+            
+        # Create main application window with sidebar and content area
+        self.main_frame = tk.Frame(self.root)
+        self.main_frame.pack(fill=tk.BOTH, expand=True)
+        
+        # Sidebar
+        self.sidebar = tk.Frame(self.main_frame, bg="#2c3e50", width=200)
+        self.sidebar.pack(side=tk.LEFT, fill=tk.Y)
+        self.sidebar.pack_propagate(False)
+        
+        # User info
+        user_data = get_user_data(self.current_user)
+        user_frame = tk.Frame(self.sidebar, bg="#2c3e50", pady=20)
+        user_frame.pack(fill=tk.X)
+        
+        tk.Label(user_frame, text=f"Welcome,", font=("Helvetica", 10), bg="#2c3e50", fg="#ecf0f1").pack()
+        tk.Label(user_frame, text=f"{user_data.get('fullname', self.current_user)}", 
+                 font=("Helvetica", 12, "bold"), bg="#2c3e50", fg="#ecf0f1").pack()
+        
+        # Navigation menu
+        menu_frame = tk.Frame(self.sidebar, bg="#2c3e50", pady=20)
+        menu_frame.pack(fill=tk.X)
+        
+        buttons = [
+            ("My Files", self.show_files_page),
+            ("Upload File", self.show_upload_page),
+            ("Shared Files", self.show_shared_page),
+            ("Activity Logs", self.show_logs_page),
+            ("Settings", self.show_settings_page),
+            ("Logout", self.logout)
+        ]
+        
+        for text, command in buttons:
+            btn = tk.Button(menu_frame, text=text, command=command, font=("Helvetica", 11),
+                         bg="#34495e", fg="#ecf0f1", bd=0, width=20, pady=8, anchor="w", padx=15)
+            btn.pack(fill=tk.X, pady=3)
+        
+        # Content area
+        self.content_frame = tk.Frame(self.main_frame, bg="#ecf0f1")
+        self.content_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+        
+        # Show files page by default
+        self.show_files_page()
+    
+    def show_files_page(self):
+        # Clear content frame
+        for widget in self.content_frame.winfo_children():
+            widget.destroy()
+            
+        # Page header
+        header_frame = tk.Frame(self.content_frame, bg="#ecf0f1", pady=15, padx=20)
+        header_frame.pack(fill=tk.X)
+        
+        tk.Label(header_frame, text="My Files", font=("Helvetica", 18, "bold"), bg="#ecf0f1").pack(side=tk.LEFT)
+        
+        # File listing
+        list_frame = tk.Frame(self.content_frame, bg="white", padx=20, pady=20)
+        list_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=10)
+        
+        # File headers
+        headers_frame = tk.Frame(list_frame, bg="#f5f5f5")
+        headers_frame.pack(fill=tk.X, pady=5)
+        
+        headers = ["Filename", "Size", "Date Modified", "Actions"]
+        widths = [3, 1, 2, 2]
+        
+        for i, header in enumerate(headers):
+            tk.Label(headers_frame, text=header, font=("Helvetica", 11, "bold"), 
+                    bg="#f5f5f5", pady=8, padx=10).grid(row=0, column=i, sticky="w", padx=5)
+            headers_frame.grid_columnconfigure(i, weight=widths[i])
