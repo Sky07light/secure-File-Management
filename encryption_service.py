@@ -44,4 +44,27 @@ def encrypt_file(file_path, password=None):
     except Exception as e:
         print(f"Encryption error: {str(e)}")
         return False
+
+def decrypt_file(file_path, password=None):
+    """Decrypt a file in-place"""
+    try:
+        # Generate key
+        key = get_encryption_key(password)
+        fernet = Fernet(key)
+        
+        # Read encrypted file
+        with open(file_path, 'rb') as file:
+            encrypted_data = file.read()
+        
+        # Decrypt data
+        decrypted_data = fernet.decrypt(encrypted_data)
+        
+        # Write decrypted data back to file
+        with open(file_path, 'wb') as file:
+            file.write(decrypted_data)
+            
+        return True
+    except Exception as e:
+        print(f"Decryption error: {str(e)}")
+        return False
         
