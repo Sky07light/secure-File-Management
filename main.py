@@ -241,3 +241,54 @@ def show_dashboard(self):
             tk.Label(headers_frame, text=header, font=("Helvetica", 11, "bold"), 
                     bg="#f5f5f5", pady=8, padx=10).grid(row=0, column=i, sticky="w", padx=5)
             headers_frame.grid_columnconfigure(i, weight=widths[i])
+
+# Get files
+        files = list_files(self.current_user)
+        
+        if not files:
+            tk.Label(list_frame, text="No files found. Upload some files to get started!",
+                    font=("Helvetica", 12), fg="#555", bg="white", pady=30).pack()
+        else:
+            files_canvas = tk.Canvas(list_frame, bg="white")
+            files_canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+            
+            scrollbar = tk.Scrollbar(list_frame, orient=tk.VERTICAL, command=files_canvas.yview)
+            scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
+            
+            files_canvas.configure(yscrollcommand=scrollbar.set)
+            files_canvas.bind('<Configure>', lambda e: files_canvas.configure(scrollregion=files_canvas.bbox("all")))
+            
+            files_frame = tk.Frame(files_canvas, bg="white")
+            files_canvas.create_window((0, 0), window=files_frame, anchor="nw")
+            
+            for i, file_info in enumerate(files):
+                bg_color = "#f9f9f9" if i % 2 == 0 else "white"
+                row_frame = tk.Frame(files_frame, bg=bg_color)
+                row_frame.pack(fill=tk.X)
+                
+                tk.Label(row_frame, text=file_info["name"], font=("Helvetica", 11), bg=bg_color, 
+                        pady=10, padx=10).grid(row=0, column=0, sticky="w", padx=5)
+                
+                tk.Label(row_frame, text=file_info["size"], font=("Helvetica", 11), bg=bg_color,
+                        pady=10).grid(row=0, column=1, sticky="w", padx=5)
+                
+                tk.Label(row_frame, text=file_info["modified"], font=("Helvetica", 11), bg=bg_color,
+                        pady=10).grid(row=0, column=2, sticky="w", padx=5)
+                
+                actions_frame = tk.Frame(row_frame, bg=bg_color)
+                actions_frame.grid(row=0, column=3, sticky="w", padx=5)
+                
+                tk.Button(actions_frame, text="Download", font=("Helvetica", 10),
+                         bg="#3498db", fg="white", bd=0, padx=8, pady=2,
+                         command=lambda f=file_info["name"]: self.download_file(f)).pack(side=tk.LEFT, padx=5)
+                
+                tk.Button(actions_frame, text="Share", font=("Helvetica", 10),
+                         bg="#2ecc71", fg="white", bd=0, padx=8, pady=2,
+                         command=lambda f=file_info["name"]: self.show_share_dialog(f)).pack(side=tk.LEFT, padx=5)
+                
+                tk.Button(actions_frame, text="Delete", font=("Helvetica", 10),
+                         bg="#e74c3c", fg="white", bd=0, padx=8, pady=2,
+                         command=lambda f=file_info["name"]: self.delete_file(f)).pack(side=tk.LEFT, padx=5)
+                
+                for j in range(4):
+                    row_frame.grid_columnconfigure(j, weight=widths[j])
