@@ -292,3 +292,45 @@ def show_dashboard(self):
                 
                 for j in range(4):
                     row_frame.grid_columnconfigure(j, weight=widths[j])
+
+def show_upload_page(self):
+        # Clear content frame
+        for widget in self.content_frame.winfo_children():
+            widget.destroy()
+            
+        # Page header
+        header_frame = tk.Frame(self.content_frame, bg="#ecf0f1", pady=15, padx=20)
+        header_frame.pack(fill=tk.X)
+        
+        tk.Label(header_frame, text="Upload File", font=("Helvetica", 18, "bold"), bg="#ecf0f1").pack(side=tk.LEFT)
+        
+        # Upload section
+        upload_frame = tk.Frame(self.content_frame, bg="white", padx=30, pady=40)
+        upload_frame.pack(fill=tk.BOTH, expand=True, padx=20, pady=10)
+        
+        # File input
+        tk.Label(upload_frame, text="Select a file to upload:", font=("Helvetica", 12, "bold"), 
+                bg="white", anchor="w").pack(fill=tk.X, pady=(0, 10))
+        
+        file_path_frame = tk.Frame(upload_frame, bg="white")
+        file_path_frame.pack(fill=tk.X, pady=10)
+        
+        self.file_path_var = tk.StringVar()
+        file_entry = tk.Entry(file_path_frame, textvariable=self.file_path_var, font=("Helvetica", 11), width=50)
+        file_entry.pack(side=tk.LEFT, fill=tk.X, expand=True, padx=(0, 10))
+        
+        browse_button = tk.Button(file_path_frame, text="Browse", command=self.browse_file, 
+                                 font=("Helvetica", 11), bg="#3498db", fg="white")
+        browse_button.pack(side=tk.RIGHT)
+        
+        # Encryption options
+        encrypt_frame = tk.Frame(upload_frame, bg="white", pady=20)
+        encrypt_frame.pack(fill=tk.X)
+        
+        tk.Label(encrypt_frame, text="Security Options:", font=("Helvetica", 12, "bold"), 
+                bg="white", anchor="w").pack(fill=tk.X, pady=(0, 10))
+        
+        self.encrypt_var = tk.BooleanVar(value=True)
+        encrypt_check = tk.Checkbutton(encrypt_frame, text="Encrypt file", variable=self.encrypt_var, 
+                                      font=("Helvetica", 11), bg="white")
+        encrypt_check.pack(anchor="w")
